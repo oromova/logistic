@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    rel="stylesheet" />
+  <!-- Output Css -->
+  <link href="./output.css" rel="stylesheet" />
+  <title>Dashboard</title>
+</head>
+
+<body>
+  <div class="col-md-6 col-lg-5 align-self-center">
+    <div class="g-bg-white g-rounded-5 g-pa-15 g-pa-30--md">
+      <h3 class="h6 g-color-black g-font-weight-600 text-uppercase text-center g-mb-25">
+        Рассчитать стоимость доставки
+      </h3>
+
+      <!-- Promo Block - Form -->
+      <form id="weight-form">
+        <div class="form-group g-mb-10 g-mb-20--md">
+          <input
+            class="form-control h-100 g-theme-color-gray-light-v10 g-placeholder-inherit g-brd-gray-light-v5 g-bg-gray-light-v5 g-bg-gray-light-v5--focus g-px-10 g-py-12"
+            type="text" placeholder="Китай" readonly />
+        </div>
+
+        <div class="form-group g-mb-10 g-mb-20--md">
+          <input
+            class="form-control h-100 g-theme-color-gray-light-v10 g-placeholder-inherit g-brd-gray-light-v5 g-bg-gray-light-v5 g-bg-gray-light-v5--focus g-px-10 g-py-12"
+            type="text" placeholder="Ташкент, Узбекистан" readonly />
+        </div>
+
+        <div class="form-group g-mb-10 g-mb-20--md">
+          <textarea
+            class="form-control h-100 g-theme-color-gray-light-v10 g-placeholder-inherit g-brd-gray-light-v5 g-bg-gray-light-v5 g-bg-gray-light-v5--focus g-px-10 g-py-12"
+            style="width: 100%">
+                      </textarea>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group g-mb-10 g-mb-20--md">
+              <input
+                class="form-control h-100 g-theme-color-gray-light-v10 g-placeholder-inherit g-brd-gray-light-v5 g-bg-gray-light-v5 g-bg-gray-light-v5--focus g-px-10 g-py-12"
+                type="text" placeholder="Объем" id="volume-input" />
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group g-mb-10 g-mb-20--md">
+              <input
+                class="form-control h-100 g-theme-color-gray-light-v10 g-placeholder-inherit g-brd-gray-light-v5 g-bg-gray-light-v5 g-bg-gray-light-v5--focus g-px-10 g-py-12"
+                type="text" placeholder="Вес" id="weight-input" />
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group g-mb-10 g-mb-20--md">
+              <input
+                class="form-control h-100 g-brd-gray-light-v5 g-bg-gray-light-v5 g-bg-gray-light-v5--focus g-px-10 g-py-12"
+                type="text" placeholder="Имя" />
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group g-mb-10 g-mb-20--md">
+              <input
+                class="form-control h-100 g-theme-color-gray-light-v10 g-placeholder-inherit g-brd-gray-light-v5 g-bg-gray-light-v5 g-bg-gray-light-v5--focus g-px-10 g-py-12"
+                type="email" placeholder="Номер телефона" />
+            </div>
+          </div>
+        </div>
+
+        <!-- for price-->
+        <p id="price-output" class="g-font-weight-600 g-mb-20"></p>
+
+        <button
+          class="btn btn-md btn-block text-uppercase u-btn-primary g-font-weight-700 g-font-size-12 g-brd-none g-rounded-4 g-py-12 g-px-15"
+          type="submit">
+          Рассчитать
+        </button>
+      </form>
+      <!-- End Promo Block - Form -->
+    </div>
+  </div>
+
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $('#weight-form').on('submit', function (e) {
+      e.preventDefault();
+
+      const volume = parseFloat($('#volume-input').val());
+      const weight = parseFloat($('#weight-input').val());
+
+      if (isNaN(volume) || isNaN(weight) || volume <= 0 || weight <= 0) {
+        $('#price-output').text('Пожалуйста, введите корректные значения.');
+        return;
+      }
+
+      const kgPerCubic = weight / volume;
+      let pricePerCubic = 0;
+
+      if (kgPerCubic <= 100) pricePerCubic = 110;
+      else if (kgPerCubic <= 150) pricePerCubic = 130;
+      else if (kgPerCubic <= 200) pricePerCubic = 160;
+      else if (kgPerCubic <= 250) pricePerCubic = 180;
+      else if (kgPerCubic <= 300) pricePerCubic = 200;
+      else if (kgPerCubic <= 350) pricePerCubic = 230;
+      else if (kgPerCubic <= 400) pricePerCubic = 260;
+      else if (kgPerCubic <= 450) pricePerCubic = 280;
+      else if (kgPerCubic <= 500) pricePerCubic = 290;
+      else if (kgPerCubic <= 700) pricePerCubic = 300;
+      else if (kgPerCubic <= 900) pricePerCubic = 320;
+      else if (kgPerCubic <= 1000) pricePerCubic = 350;
+      else pricePerCubic = kgPerCubic * 0.55;
+
+      const totalPrice = pricePerCubic * volume;
+
+      $('#price-output').text(`Итоговая стоимость: $${totalPrice.toFixed(2)}`);
+    });
+  });
+
+</script>
+
+
+</html>
